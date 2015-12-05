@@ -5,9 +5,10 @@ define([
     'common',
     'app/collections/group-repos',
     'app/views/group-repo',
-    'app/views/add-group-repo'
+    'app/views/add-group-repo',
+    'app/views/group-admin'
 ], function($, _, Backbone, Common, GroupRepos, GroupRepoView,
-    AddGroupRepoView) {
+    AddGroupRepoView, GroupAdminView) {
     'use strict';
 
     var GroupView = Backbone.View.extend({
@@ -19,7 +20,8 @@ define([
         events: {
             'click .repo-create': 'createRepo',
             'click .by-name': 'sortByName',
-            'click .by-time': 'sortByTime'
+            'click .by-time': 'sortByTime',
+            'click .toggle-admin': 'toggleGroupAdminPopover'
         },
 
         initialize: function(options) {
@@ -36,6 +38,18 @@ define([
 
             this.dirView = options.dirView;
 
+            var _this = this;
+            // remove 'group-admin' popover
+            $(document).click(function(e) {
+                var target = e.target || event.srcElement;
+                var popover = _this.$('.group-admin-popover');
+                if (popover.length &&
+                    !_this.$('.toggle-admin').is(target) &&
+                    !popover.is(target) &&
+                    !popover.find('*').is(target)) {
+                    popover.remove();
+                }
+            });
         },
 
         addOne: function(repo, collection, options) {
@@ -179,6 +193,16 @@ define([
             repos.each(this.addOne, this);
             el.toggleClass('icon-caret-up icon-caret-down').show();
             repos.comparator = null;
+        },
+
+        toggleGroupAdminPopover: function() {
+            if (!this.$('.group-admin-popover').length) {
+                var $groupAdminPopover = new GroupAdminView({groupView: this});
+                this.$el.append($groupAdminPopover.$el);
+            } else {
+                this.$('.group-admin-popover').remove();
+                return false;
+            }
         },
 
         hide: function() {

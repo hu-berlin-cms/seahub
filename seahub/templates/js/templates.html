@@ -640,12 +640,12 @@
     {% endif %}
 
     <div class="fright">
-    <% if (!is_pub) { %>
-    <span class="sf2-icon-msgs op-icon" title="{% trans "Discussion" %}"></span>
-    <% } %>
-    <span class="sf2-icon-user op-icon" title="{% trans "Members" %}"></span>
     <% if (is_staff) { %>
-    <span class="sf2-icon-wrench op-icon" title="{% trans "Admin" %}"></span>
+    <span class="sf2-icon-cog1 op-icon toggle-admin" title="{% trans "Admin" %}"></span>
+    <% } %>
+    <span class="sf2-icon-user2 op-icon" title="{% trans "Members" %}"></span>
+    <% if (!is_pub) { %>
+    <span class="sf2-icon-msgs2 op-icon" title="{% trans "Discussion" %}"></span>
     <% } %>
     </div>
 </div>
@@ -671,6 +671,30 @@
     </ul>
     <input type="submit" value="{% trans "Submit"%}" class="submit" />
 </form>
+</script>
+<script type="text/template" id="group-admin-tmpl">
+<div class="popover">
+    <div class="outer-caret up-outer-caret">
+        <div class="inner-caret"></div>
+    </div>
+    <h4 class="popover-header">{% trans "Group Settings" %}</h4>
+    <div class="popover-content">
+        <ul>
+            <li><a href="#" class="group-admin-item rename">{% trans "Rename" %}</a></li>
+            <li><a href="#" class="group-admin-item transfer">{% trans "Transfer" %}</a></li>
+        </ul>
+        <hr class="popover-hr" />
+        <ul>
+            <li><a href="#" class="group-admin-item change-members">{% trans "Change Members" %}</a></li>
+            <li><a href="#" class="group-admin-item change-admins">{% trans "Change Admins" %}</a></li>
+        </ul>
+        <hr class="popover-hr" />
+        <ul>
+            <li><a href="#" class="group-admin-item dismiss">{% trans "Dismiss" %}</a></li>
+        </ul>
+    </div>
+    <span class="popover-close sf2-icon-x1 op-icon close-admin" title="{% trans "Close" %}"></span>
+ </div>
 </script>
 <script type="text/template" id="folder-perm-item-tmpl">
     <% if (for_user) { %>
