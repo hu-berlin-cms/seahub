@@ -37,6 +37,7 @@ define([
             this.listenTo(this.repos, 'reset', this.reset);
 
             this.dirView = options.dirView;
+            this.sideNavView = options.sideNavView;
 
             var _this = this;
             // remove 'group-admin' popover
@@ -197,7 +198,7 @@ define([
 
         toggleGroupAdminPopover: function() {
             if (!this.$('.group-admin-popover').length) {
-                var $groupAdminPopover = new GroupAdminView({groupView: this});
+                var $groupAdminPopover = new GroupAdminView({groupView: this, sideNavView: this.sideNavView});
                 this.$el.append($groupAdminPopover.$el);
             } else {
                 this.$('.group-admin-popover').remove();
